@@ -13,18 +13,27 @@
     </div>
 
     <form>
-      {% for template in templates %}
+
         <div class="row">
-          <div class="col-xs-6 col-md-3">
-            <a href='#' class ="thumbnail">
-              <img src="http://localhost:8000/uploads{{template.template_image}}">
-            </a>
-          </div>
+          {% for template in templates %}
+            <div class="col-xs-6 col-md-3">
+
+              <a href='#' class ="thumbnail">
+                <img src="http://localhost:8000{{template.template_image.url}}">
+              </a>
+              <br>
+              <div id = "template_radio">
+                <input type="radio" name ="template_num" value="{{template.order}}">
+              </div>
+            </div>
+          {% endfor %}
+
+
         </div>
-        {% endfor %}
-        {% for template in templates %}
-          <input type="radio" name ="template_num" value="{{template.id}}"><br>
-        {% endfor %}
+        <br>
+
+
+        <br>
         <input type ="button" value="prev">
         <input type ="submit" value="pre-view">
     </form>
