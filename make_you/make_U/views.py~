@@ -1,0 +1,12 @@
+from django.shortcuts import render
+
+def main(request):
+return render(request, 
+
+def join(request):
+
+def edit(request):
+
+def select_temp(request):
+
+

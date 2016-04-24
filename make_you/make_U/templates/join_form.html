@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block page_title %}
+    개인정보 입력
+{% endblock %}
+
+{% block header %}
+    <h2>회원가입 - 개인정보 입력</h2>
+{% endblock %}
+
+{% block body %}
+    <form action="{% url 'join' %}" method="Post">
+      {% csrf_token %}
+       <label for="id">ID</label>  <input type="text" name="username" id="id">
+            <input type="button" value="중복검사"><br>
+        <label for ="password">Password</label> <input type = "password" name ="password" id ="password"><br>
+        <label for ="first_name">first name</label><input type = "text" name="first_name"id="first_name"><br>
+        <label for ="last_name">last name</label> <input type ="text" name="last_name" id="last_name"><br>
+        <a href="{%url 'main'%}" class = "btn btn-warning btn-sm">main</a>
+        <input type ="submit" value ="submit" class = "btn btn-success btn-sm">
+
+    </form>
+
+{% endblock %}

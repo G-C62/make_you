@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block header %}
+    <div id ="main_head">
+      <div class= "title">
+        <h1>Make you</h1>
+      </div>
+      <div class= "describe">
+        <p>당신에 대해 아직 미숙한 사람들에게 당신을 가장 효과적이고 인상적이게 당신을 표현 할 수 있는 방법
+        'make you'에서 당신만의 자기소개서를 완성해보세요!!
+        </p>
+      </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+  <form class ="login" action="{%url 'main'%}" method="post">
+    <label for="id">아이디</label> <input type = 'text' id="id"></input><br>
+    비밀번호 <input type = 'password' ></input><br>
+    <div class="button">
+      <a href="{%url 'join'%}" class = "btn btn-success btn-sm">회원가입</a>
+      <input type = 'submit' value ="로그인" class = "btn btn-primary btn-sm"></input>
+    </div>
+    </form>
+{% endblock %}
+
+{% block footer %}
+    <footer>
+
+    <p>관리자 - <strong>Sombody</strong>            전화번호  -  phonenumber</p>
+
+    <address>주소 - 건대와 강남사이 어딘가</address>
+    <p>copyright  by ©God_cha. all right reserved<p>
+    <email>nsw9211@gamil.com</email>
+  </footer>
+{% endblock %}

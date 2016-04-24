@@ -1,0 +1,25 @@
+{% extends 'layout.html'%}
+{% block page_title %}
+    회원가입
+{% endblock %}
+
+{% block header %}
+    <h2>Make you - 회원가입 약관</h2>
+{% endblock %}
+{% block body %}
+    <p id ="agreement">회원이 되고싶으세요? <br>
+    그럼 동의를 누르시고 가입하세요 <br>
+    참쉽죠 :)
+    </p>
+{% endblock %}
+{% block footer %}
+    <form>
+        <input type="button" value="main">
+        <label for="aree">약관 동의</label> <input type="radio" default ="false" id="aree">
+        <input type="submit" value="개인정보 입력">
+        
+        </form>
+{% endblock %}
+
+
+

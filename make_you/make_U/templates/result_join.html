@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block page_title %}
+    환영합니다
+{% endblock %}
+{% block header %}
+    <h2>환영합니다</h2><br>
+    <h5>{{username}}님의 회원가입이 완료되었습니다</h5>
+{% endblock %}
+
+{% block body %}
+  <form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" value="makke you now!!"class = "btn btn-primary btn-sm"><br>
+  </form>
+  <a href="{%url 'main'%}" class = "btn btn-warning btn-sm">main</a>
+
+{% endblock %}

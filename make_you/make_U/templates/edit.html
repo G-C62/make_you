@@ -1,0 +1,18 @@
+{% extends 'layout.html'%}
+{% block page_title %}
+    {{username}}정보입력
+{% endblock %}
+
+{% block header %}
+    <h2>{{username}} - 정보입력</h2>
+{% endblock %}
+
+{% block body %}
+    <form action="" method="Post">
+      {% csrf_token %}
+        <label for="summary_box">summary</label> <textarea name="summary" id="summary_box"></textarea>
+        <label for="experience_box">work experience</label> <textarea name="work_exp" id ="experience_box"></textarea><br>
+        <a href="{%url 'main'%}" class = "btn btn-warning btn-sm">main</a>
+        <input type="submit" value ="select template" class = "btn btn-primary btn-sm">
+    </form>
+{% endblock %}
