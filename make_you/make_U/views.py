@@ -65,16 +65,13 @@ def select_temp(request, username):
 
 
     templates = Templates.objects.all()
-    templates_num = templates.count()
-    template_urls = []
-    for num in range(templates_num):
-        template_urls.append(templates[num].template_image.url)
+    
+
 
     ctx={
         'username' : username,
         'templates' : templates,
-        'templates_num' : templates_num,
-        'template_urls' : template_urls,
+
     }
     return render(request,'select_temp.html',ctx)
 
