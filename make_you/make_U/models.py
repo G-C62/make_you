@@ -11,4 +11,4 @@ class Contents(models.Model):
 
 class Templates(models.Model):
     template_image = models.ImageField(blank=True, null=True)
-    order = models.SmallIntegerField(default=1)
+    order = models.SmallIntegerField(default=1, primary_key =True)

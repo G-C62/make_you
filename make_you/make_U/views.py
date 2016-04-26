@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import Contents
 from .models import Templates
-from django.conf import settings
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def main(request):
@@ -44,14 +45,25 @@ def result_join(request, username):
 
 def edit(request, username):
     if request.method == 'POST':
-        new_contents = Contents(
+        try:
+            User.objects.get(pk = request.user.pk)
+
+            origin_contents = Contents.objects.get(user = request.user)
+            origin_contents.summary = request.POST.get('summary')
+            origin_contents.work_exp = request.POST.get('work_exp')
+
+            origin_contents.save()
+            return redirect(select_temp,username)
+
+        except  ObjectDoesNotExist:
+            new_contents = Contents(
             summary = request.POST.get('summary'),
             work_exp = request.POST.get('work_exp'),
-        )
-        new_contents.user = request.user
-        new_contents.save()
+            )
+            new_contents.user = request.user
+            new_contents.save()
 
-        return redirect(select_temp,username)
+            return redirect(select_temp,username)
 
     ctx={
         'username' :username,
@@ -61,11 +73,15 @@ def edit(request, username):
 def select_temp(request, username):
     if request.method == 'POST':
         template_num = request.POST.get('template_num')
+        origin_contents = Contents.objects.get(user = request.user)
+        origin_contents.template_id = template_num
+        origin_contents.save()
+
         return redirect(pre_view, template_num)
 
 
     templates = Templates.objects.all()
-    
+
 
 
     ctx={
@@ -76,7 +92,9 @@ def select_temp(request, username):
     return render(request,'select_temp.html',ctx)
 
 def pre_view(request, template_num):
-    ctx = {
+    origin_contents = Contents.objects.get(user = request.user)
 
+    ctx = {
+        'content' : origin_contents
     }
     return render(request,'result_pre_view.html',ctx)
