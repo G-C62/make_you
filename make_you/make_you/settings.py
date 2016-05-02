@@ -131,3 +131,9 @@ STATICFILES_DIRS = (
 MEDIA_URL ='/uploads/'
 
 MEDIA_ROOT=os.path.join(BASE_DIR,'uploads')
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGIN_URL = '/login/'   #로그인 URL을 강제화함
+
+LOGOUT_URL ='/logout/'

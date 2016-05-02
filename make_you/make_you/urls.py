@@ -19,16 +19,20 @@ from django.conf.urls.static import static
 from django.conf import settings
 from make_U import views as make_U_views
 from django.views.generic import TemplateView
+from django.contrib.auth.views import login
+from django.contrib.auth.views import logout
 
 #url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),- 직접 템플릿에 연결
 
 urlpatterns = [
-    url(r'^pre_view/(?P<template_num>[0-9]+)$',make_U_views.pre_view, name= 'pre_view'),
+    url(r'^pre_view/$',make_U_views.pre_view, name= 'pre_view'),
     url(r'^template/(?P<username>[0-9a-zA-Z]+)$',make_U_views.select_temp, name = 'select_temp'),
     url(r'^edit/(?P<username>[0-9a-zA-Z]+)$',make_U_views.edit, name = 'edit'),
     url(r'^result_join/(?P<username>[0-9a-zA-Z]+)$',make_U_views.result_join, name="result_join"),
     url(r'^join/$',make_U_views.join, name = 'join'),
     url(r'^$', make_U_views.main, name='main'),
+    url(r'^login/$',login,{'template_name': 'login.html'},name = "login_url"),
+    url(r'^logout/$',logout,{'next_page': '/login/'},name = "logout_url"),
     url(r'^admin/', admin.site.urls),
 
 ]
