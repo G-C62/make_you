@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block page_title %}
+   아이디 중복검사
+{% endblock %}
+
+{% block header %}
+  <h2>중복검사</h2>
+{% endblock %}
+
+{% block body %}
+  <div id ="result">
+  <h3 id="checked_id">user_id</h3>
+  <div>
+  <script>
+
+    if({{checked}}){
+
+      var result_tag = document.createElement("h3");
+      var result_text = document.createTextNode("사용가능한 아이디 입니다");
+      result_tag.appendChild(result_text);
+      result_tag.setAttribute('style','color:blue');
+      var element = document.getElementById("result");
+      element.appendChild(result_tag);
+    }
+    else{
+
+        var result_tag = document.createElement("h3");
+        var result_text = document.createTextNode("이미 존재하는 아이디 입니다");
+        result_tag.appendChild(result_text);
+        result_tag.setAttribute('style','color:red');
+        var element = document.getElementById("result");
+        element.appendChild(result_tag);
+    }
+  </script>
+
+{% endblock %}
