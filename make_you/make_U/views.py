@@ -10,17 +10,6 @@ from django.contrib.auth import authenticate, login, logout
 
 @login_required
 def main(request):
-    '''if request.method == "POST":
-        login_username = request.POST.get('id')
-        login_password = request.POST.get('password')
-        user = authenticate(username=login_username,password=login_password)
-        if user is not None:
-            login(request, user)
-            return render(request,'main.html',ctx)
-
-        else:
-            return redirect('login')'''
-
     username = request.user.username
     ctx={
 
@@ -47,36 +36,50 @@ def join(request):
             if user is not None:
                 login(request, user)
 
-            username = username
-            return redirect(result_join, username )
+
+            return redirect(result_join )
 
 
 
 
     return render(request,'join_form.html')
 
-def result_join(request, username):
-    if request.method == 'POST':
-        username = username
-
-        return redirect(edit, username)
+def check_overlap(request,checking_id):
+    if request.method =='POST':
+        pass
+    checked = 0
+    try:
+        User.objects.get(username = checking_id)
+        checked = 0
+    except  ObjectDoesNotExist:
+        checked = 1
     ctx={
-        'username' : username,
+        'checked' : checked
+    }
+
+    return render(request,'check_overlap.html',ctx)
+
+def result_join(request):
+    if request.method == 'POST':
+
+
+        return redirect(edit)
+    username = request.user.username
+    ctx={
+            'username' : username
         }
     return render(request,'result_join.html',ctx)
 
 @login_required
-def edit(request, username):
+def edit(request):
     if request.method == 'POST':
         try:
-            User.objects.get(pk = request.user.pk)
-
             origin_contents = Contents.objects.get(user = request.user)
             origin_contents.summary = request.POST.get('summary')
             origin_contents.work_exp = request.POST.get('work_exp')
 
             origin_contents.save()
-            return redirect(select_temp,username)
+            return redirect(select_temp)
 
         except  ObjectDoesNotExist:
             new_contents = Contents(
@@ -86,28 +89,37 @@ def edit(request, username):
             new_contents.user = request.user
             new_contents.save()
 
-            return redirect(select_temp,username)
+            return redirect(select_temp)
 
-    ctx={
-        'username' :username,
-    }
-    return render(request,'edit.html',ctx)
+    try:
+        origin_content = Contents.objects.get(user = request.user)
+        username = request.user.username
+        ctx={
+            'content' : origin_content
+        }
+        return render(request,'edit.html',ctx)
+    except  ObjectDoesNotExist:
+        username = request.user.username
+        ctx={
+            'username' : username
+        }
+        return render(request,'edit.html',ctx)
 
 @login_required
-def select_temp(request, username):
+def select_temp(request):
     if request.method == 'POST':
         template_num = request.POST.get('template_num')
         origin_contents = Contents.objects.get(user = request.user)
         origin_contents.template_id = template_num
         origin_contents.save()
 
-        return redirect(pre_view, template_num)
+        return redirect(pre_view)
 
 
     templates = Templates.objects.all()
 
 
-
+    username = request.user.username
     ctx={
         'username' : username,
         'templates' : templates,
@@ -117,9 +129,20 @@ def select_temp(request, username):
 
 @login_required
 def pre_view(request):
-    origin_contents = Contents.objects.get(user = request.user)
+
+    try:
+        user_contents = Contents.objects.get(user = request.user)
+    except  ObjectDoesNotExist:
+        username = request.user.username
+
+        return redirect(edit,username)
+    template_html ='template_{t_id}.html'.format(
+        t_id = user_contents.template_id
+        )
+    user_full_name = request.user.get_full_name()
 
     ctx = {
-        'content' : origin_contents
+        'content' : user_contents,
+        'user_full_name' : user_full_name,
     }
-    return render(request,'result_pre_view.html',ctx)
+    return render(request,template_html,ctx)

@@ -23,12 +23,13 @@ from django.contrib.auth.views import login
 from django.contrib.auth.views import logout
 
 #url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),- 직접 템플릿에 연결
-
+#(?P<username>[0-9a-zA-Z]+)
 urlpatterns = [
     url(r'^pre_view/$',make_U_views.pre_view, name= 'pre_view'),
-    url(r'^template/(?P<username>[0-9a-zA-Z]+)$',make_U_views.select_temp, name = 'select_temp'),
-    url(r'^edit/(?P<username>[0-9a-zA-Z]+)$',make_U_views.edit, name = 'edit'),
-    url(r'^result_join/(?P<username>[0-9a-zA-Z]+)$',make_U_views.result_join, name="result_join"),
+    url(r'^template/$',make_U_views.select_temp, name = 'select_temp'),
+    url(r'^edit/$',make_U_views.edit, name = 'edit'),
+    url(r'^result_join/$',make_U_views.result_join, name="result_join"),
+    url(r'^join/check_overlap/(?P<checking_id>[0-9a-zA-Z]+)/$',make_U_views.check_overlap, name="check_overlap"),
     url(r'^join/$',make_U_views.join, name = 'join'),
     url(r'^$', make_U_views.main, name='main'),
     url(r'^login/$',login,{'template_name': 'login.html'},name = "login_url"),

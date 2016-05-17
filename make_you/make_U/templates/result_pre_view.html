@@ -11,8 +11,9 @@
         {{content.work_exp}}<br>
         {{content.template.order}}
       </p></div>
+        <a href="{%url 'edit'%}" class = "btn btn-success btn-sm">수정</a>
 {% endblock %}
 {% block footer %}
-    <button>prev</button>
+    <a href="{%url 'main'%}" class = "btn btn-warning btn-sm">main</a>
     <button type="submit">complete</button>
 {% endblock %}

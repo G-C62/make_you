@@ -1,9 +1,5 @@
 {% extends 'layout.html' %}
 {% block header %}
-    <div class="button">
-
-      <a href="{%url 'logout_url'%}" class = "btn btn-danger btn-sm">logout</a>
-    </div>
     <div id ="main_head">
       <div class= "title">
         <h1>Make you</h1>
@@ -18,11 +14,15 @@
 
 {% block body %}
 
-
-      <h4>환영합니다 <b>{{username}}</b>님</h3><br>
+    <form class ="login" action="." method="post">
+      {% csrf_token %}
+      <label for="id">아이디</label> <input type = 'text' id="id" name="username"></input><br>
+      <label for="password">비밀번호</label> <input type = 'password' id="password" name="password"></input><br>
       <div class="button">
-        <a href="{%url 'pre_view'%}" class = "btn btn-success btn-sm">go mine!!</a>
+        <a href="{%url 'join'%}" class = "btn btn-success btn-sm">회원가입</a>
+        <input type = 'submit' value ="로그인" class = "btn btn-primary btn-sm"></input>
       </div>
+      </form>
 
 {% endblock %}
 

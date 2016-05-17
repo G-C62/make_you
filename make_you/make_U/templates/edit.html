@@ -10,8 +10,8 @@
 {% block body %}
     <form action="" method="Post">
       {% csrf_token %}
-        <label for="summary_box">summary</label> <textarea name="summary" id="summary_box"></textarea>
-        <label for="experience_box">work experience</label> <textarea name="work_exp" id ="experience_box"></textarea><br>
+        <label for="summary_box">summary</label> <textarea name="summary" id="summary_box" >{{content.summary}}</textarea>
+        <label for="experience_box">work experience</label> <textarea name="work_exp" id ="experience_box" >{{content.work_exp}}</textarea><br>
         <a href="{%url 'main'%}" class = "btn btn-warning btn-sm">main</a>
         <input type="submit" value ="select template" class = "btn btn-primary btn-sm">
     </form>
