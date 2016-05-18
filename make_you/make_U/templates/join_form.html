@@ -12,7 +12,7 @@
     <form action="{% url 'join' %}" method="Post">
       {% csrf_token %}
        <label for="id">ID</label>  <input type="text" name="username" id="id">
-            <input type="button" value="중복검사" onclick="check_overlap()"><br>
+            <input type="button" value="중복검사" onclick="check_overlap()" id="overlap_button"><br>
         <label for ="password">Password</label> <input type = "password" name ="password" id ="password"><br>
         <label for ="first_name">first name</label><input type = "text" name="first_name"id="first_name"><br>
         <label for ="last_name">last name</label> <input type ="text" name="last_name" id="last_name"><br>
@@ -23,10 +23,15 @@
     <script>
       function check_overlap(){
         checking_id = document.getElementById('id').value;
-        url = "check_overlap/"
-        win = window.open(url+checking_id, 'ot', 'width=300px, height=500px');
+        if(!checking_id){
+          alert('id를 입력해주세요');
+        }
+        else{
         checking_id = document.getElementById('id').value;
-        win.document.getElementById('checked_id').innerText=checking_id;
+        url = "check_overlap/"
+        win = window.open(url+checking_id, 'ot', 'width=500px, height=300px, left=750, top=90');
+        checking_id = document.getElementById('id').value;
+        }
       }
       </script>
 

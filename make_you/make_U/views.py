@@ -45,16 +45,30 @@ def join(request):
     return render(request,'join_form.html')
 
 def check_overlap(request,checking_id):
-    if request.method =='POST':
-        pass
     checked = 0
+    if request.method =='POST':
+        try:
+            checked_id = request.POST.get('re_check_id')
+            User.objects.get(username = checked_id)
+            checked = 0
+        except  ObjectDoesNotExist:
+            checked = 1
+        ctx={
+            'checked' : checked,
+            'checked_id' : checked_id,
+        }
+
+        return render(request,'check_overlap.html',ctx)
+
+
     try:
         User.objects.get(username = checking_id)
         checked = 0
     except  ObjectDoesNotExist:
         checked = 1
     ctx={
-        'checked' : checked
+        'checked' : checked,
+        'checked_id' : checking_id,
     }
 
     return render(request,'check_overlap.html',ctx)
@@ -95,7 +109,8 @@ def edit(request):
         origin_content = Contents.objects.get(user = request.user)
         username = request.user.username
         ctx={
-            'content' : origin_content
+            'content' : origin_content,
+            'username' : username,
         }
         return render(request,'edit.html',ctx)
     except  ObjectDoesNotExist:
@@ -133,9 +148,10 @@ def pre_view(request):
     try:
         user_contents = Contents.objects.get(user = request.user)
     except  ObjectDoesNotExist:
-        username = request.user.username
 
-        return redirect(edit,username)
+
+        return redirect(edit)
+
     template_html ='template_{t_id}.html'.format(
         t_id = user_contents.template_id
         )

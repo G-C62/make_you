@@ -10,8 +10,16 @@
 
 {% block body %}
   <div id ="result">
-  <h3 id="checked_id">user_id</h3>
-  <div>
+
+      <h3 id="checked_id">{{checked_id}}</h3>
+      <input type ="button" value="이 아이디로 사용" hidden="true" id="apply_button" onclick="apply_id()">
+  </div></br></br>
+  <form action="" method="post">
+    {% csrf_token %}
+    <input type="text" name="re_check_id">
+    <input type ="submit" value="중복검사" >
+
+  </form>
   <script>
 
     if({{checked}}){
@@ -22,6 +30,9 @@
       result_tag.setAttribute('style','color:blue');
       var element = document.getElementById("result");
       element.appendChild(result_tag);
+      document.getElementById("apply_button").hidden=false;
+
+
     }
     else{
 
@@ -31,7 +42,18 @@
         result_tag.setAttribute('style','color:red');
         var element = document.getElementById("result");
         element.appendChild(result_tag);
+        document.getElementById("apply_button").hidden=true;
     }
+
+    function apply_id(){
+      origin_win = window.opener;
+      var final_id = document.getElementById("checked_id").innerText;
+      origin_win.document.getElementById("id").value=final_id;
+      origin_win.document.getElementById("id").readOnly = true;
+      origin_win.document.getElementById("overlap_button").value="id변경";
+      window.close();
+    }
+
   </script>
 
 {% endblock %}
